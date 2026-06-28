@@ -2,9 +2,14 @@
  * @Author: lujiangbo knight_lujb@163.com
  * @Date: 2026-06-27 18:22:28
  * @LastEditors: lujiangbo knight_lujb@163.com
- * @LastEditTime: 2026-06-27 22:14:04
+ * @LastEditTime: 2026-06-28 20:13:51
  * @Description: 
  */
+import { webcrypto } from 'node:crypto';
+
+if (!(globalThis as any).crypto) {
+  (globalThis as any).crypto = webcrypto;
+}
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import { config } from './config';
