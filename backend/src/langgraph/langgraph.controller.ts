@@ -5,7 +5,7 @@
  * @LastEditTime: 2026-06-28 20:17:25
  * @Description: 
  */
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { LanggraphService } from './langgraph.service';
 
 @Controller('langgraph')
@@ -16,5 +16,9 @@ export class LanggraphController {
   @Post('memory-chat')
   memoryChat(@Body() body: { threadId: string; message: string }) {
     return this.langgraphService.memoryChat(body.threadId, body.message).then(answer => ({ answer }));
+  }
+  @Get('history/:threadId')
+  getHistory(@Param('threadId') threadId: string) {
+    return this.langgraphService.getHistory(threadId);
   }
 }
