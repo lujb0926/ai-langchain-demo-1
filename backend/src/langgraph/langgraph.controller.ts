@@ -7,11 +7,13 @@
  */
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { LanggraphService } from './langgraph.service';
+import { ReactchatService } from './reactchat.service';
 
 @Controller('langgraph')
 export class LanggraphController {
   constructor(
-    private readonly langgraphService: LanggraphService
+    private readonly langgraphService: LanggraphService,
+    private readonly reactchatService: ReactchatService
   ) { }
   @Post('memory-chat')
   memoryChat(@Body() body: { threadId: string; message: string }) {
@@ -20,5 +22,9 @@ export class LanggraphController {
   @Get('history/:threadId')
   getHistory(@Param('threadId') threadId: string) {
     return this.langgraphService.getHistory(threadId);
+  }
+  @Post('react-chat')
+  reactChat(@Body() body: { threadId: string; message: string }) {
+    return this.reactchatService.reactChat(body.threadId, body.message).then(answer => ({ answer }));
   }
 }
